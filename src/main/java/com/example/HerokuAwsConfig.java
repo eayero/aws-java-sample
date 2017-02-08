@@ -48,8 +48,12 @@ public class HerokuAwsConfig implements AWSCredentialsProvider {
     String awsSecretKey = config.get("AWS_SECRET_KEY");
 
     this.credentials = new HerokuConfigAWSCredentials(awsAccessKeyId, awsSecretKey);
-    this.bucket = config.get("AWS_BUCKET");
+    this.bucket = config.get("AWS_S3_BUCKET_NAME");
     this.region = config.get("AWS_REGION");
+  }
+
+  public String toString() {
+    return "S3: " + bucket + " (" + region + ")";
   }
 
   public static class HerokuConfigAWSCredentials implements AWSCredentials {

@@ -9,12 +9,11 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
 
 import java.io.*;
-import java.util.UUID;
 
 public class S3Sample {
 
     public static void main(String[] args) throws IOException {
-        String appName = args[0];
+        String appName = System.getenv("HEROKU_APP_NAME");
 
         // TODO we could read this from ~/.netrc if user is logged in with the Heroku CLI
         // TODO create a little library to do ^^
@@ -25,8 +24,10 @@ public class S3Sample {
         Region region = Region.getRegion(Regions.fromName(config.getRegion()));
         s3.setRegion(region);
 
-        String bucketName = "my-first-s3-bucket-" + UUID.randomUUID();
+        String bucketName = config.getBucket();
         String key = "MyObjectKey";
+
+        System.out.println(config);
 
         try {
             /*
